@@ -1,17 +1,11 @@
-// pages/city/city.js
+// pages/temp/temp.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    country:['中国','美国','日本']
-  },
 
-  bindPickerChange: function(e){
-    this.setData({
-      index:e.detail.value
-    })
   },
 
   /**

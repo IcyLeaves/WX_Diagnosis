@@ -1,7 +1,0 @@
-<!--pages/city/city.wxml-->
-<view>
-  <view>选择国家</view>
-  <picker bindchange='bindPickerChange' value='index' range='{{country}}'>
-    <view>当前选择为：{{country[index]}}</view>
-  </picker>
-</view>
