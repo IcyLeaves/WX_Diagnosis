@@ -1,13 +1,35 @@
 {
   "pages": [
+    "pages/temp/temp",
     "pages/index/index",
     "pages/logs/logs"
+    
+
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#0094ff",
+    "navigationBarTitleText": "糖尿病辅助检测",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color":"#000",
+    "selectedColor":"#0094ff",
+    "backgroundColor":"#F5F7F7",
+    "borderStyle":"white",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath": "icons/index.png",
+      "selectedIconPath": "icons/index-active.png"
+    },
+    {
+      "pagePath": "pages/temp/temp",
+      "text": "临时",
+      "iconPath": "icons/planet.png",
+      "selectedIconPath": "icons/planet-active.png"
+    }]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"
