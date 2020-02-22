@@ -1,35 +1,34 @@
 {
   "pages": [
-    "pages/temp/temp",
-    "pages/index/index",
-    "pages/logs/logs"
-    
-
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#0094ff",
-    "navigationBarTitleText": "糖尿病辅助检测",
+    "navigationBarTitleText":"糖尿病辅助检测",
     "navigationBarTextStyle": "white",
-    "enablePullDownRefresh": true
+    "enablePullDownRefresh": true,
+    "navigationStyle":"default"
   },
   "tabBar": {
-    "color":"#000",
-    "selectedColor":"#0094ff",
-    "backgroundColor":"#F5F7F7",
-    "borderStyle":"white",
-    "list": [{
-      "pagePath": "pages/index/index",
-      "text": "首页",
-      "iconPath": "icons/index.png",
-      "selectedIconPath": "icons/index-active.png"
-    },
-    {
-      "pagePath": "pages/temp/temp",
-      "text": "临时",
-      "iconPath": "icons/planet.png",
-      "selectedIconPath": "icons/planet-active.png"
-    }]
+    "color": "#000",
+    "selectedColor": "#0094ff",
+    "backgroundColor": "#F5F7F7",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "icons/index.png",
+        "selectedIconPath": "icons/index-active.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "我的",
+        "iconPath": "icons/my.png",
+        "selectedIconPath": "icons/my-active.png"
+      }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"
