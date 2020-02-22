@@ -5,7 +5,22 @@ Page({
    * 页面的初始数据
    */
   data: {
+    msg: "hello World 1",
+    num:1000,
+    isBoy:true,
+    person:{
+      name:"小红",
+      height:150
+    },
+    title:"这是title",
 
+    isChecked:1,
+    numA:1,
+    numB:2,
+    strA:"hello",
+    strB:"world",
+    numC:30,
+    arr:["Apple","Banana","Watermelon"]
   },
 
   /**

@@ -1,1 +1,8 @@
 /* pages/temp/temp.wxss */
+@import "../../stylus/box.wxss";
+
+.box1{
+    width:50rpx;
+    height:50rpx;
+    background-color: aqua;
+}
