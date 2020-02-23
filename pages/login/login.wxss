@@ -1,0 +1,26 @@
+/* pages/login/login.wxss */
+.login-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-poster {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300rpx;
+}
+
+.login-image{
+    display: flex;
+    justify-content: center;
+    height: 150rpx;
+    width: 150rpx;
+}
+
+page {
+    height: 100%;
+}

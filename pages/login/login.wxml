@@ -1,0 +1,29 @@
+<view class="login-poster">
+    <image class="login-image" mode="scaleToFill" src="/icons/planet-active.png"></image>
+</view>
+<view class="login-container">
+    <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+
+    <mp-form id="form" rules="{{rules}}" models="{{formData}}">
+        <mp-cells>
+            <mp-cell prop="username" title="用户名" ext-class="">
+                <input bindinput="formInputChange" data-field="username" class="weui-input" placeholder="请输入用户名" />
+            </mp-cell>
+            <mp-cell prop="password" title="密码" ext-class="">
+                <input bindinput="formInputChange" data-field="password" class="weui-input" placeholder="请输入密码" />
+            </mp-cell>
+        </mp-cells>
+    </mp-form>
+    <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="submitForm">登录</button>
+    </view>
+    <view>
+        <button type="default" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">微信授权登录</button>
+    </view>
+    <!-- <view class="login-row">
+        <image class="login-image" mode="scaleToFill" src="/icons/planet-active.png"></image>
+    </view>
+    <view class="login-row">
+        <button type="primary">微信登录</button>
+    </view> -->
+</view>

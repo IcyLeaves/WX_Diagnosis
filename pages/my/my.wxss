@@ -1,0 +1,10 @@
+/* pages/my/my.wxss */
+.radius-panel {
+    background-color: white;
+    border-radius: 20rpx;
+    height: 300rpx;
+    margin:15rpx 25rpx 15rpx 25rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
