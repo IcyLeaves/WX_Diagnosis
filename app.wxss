@@ -12,5 +12,5 @@
 } 
 
 page {
-  background-color: white;
+  background-color: #eeeeee;
 }

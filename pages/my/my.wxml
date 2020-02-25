@@ -1,4 +1,9 @@
-<view class="radius-panel">
-
-    
+<view class="my-info-panel">
+    <view class="my-align-panel">
+        <image class="my-head-image" src="{{userInfo.headImgUrl}}" mode="scaleToFill"></image>
+        <view class="my-nick-name">{{userInfo.nickName}}</view>
+    </view>
+    <view class="my-radius-panel">
+        <view>我还不知道这里要放些什么</view>
+    </view>
 </view>

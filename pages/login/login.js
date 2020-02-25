@@ -7,12 +7,24 @@ Page({
     formData: {
 
     },
-    rules: [{
+    formRules: [{
       name: 'username',
       rules: {
         required: true,
         message: '请填写用户名'
-      },
+      }
+    },{
+      name:'password',
+      rules:[{
+        required:true,
+        message:'请填写密码'
+      },{
+        minlength:4,
+        message:'密码不能少于4位'
+      },{
+        maxlength:16,
+        message:'密码不能多于16位'
+      }]
     }]
   },
   formInputChange(e) {
@@ -24,17 +36,25 @@ Page({
     })
   },
   bindGetUserInfo: function (res) {
-    console.log(1);
     if (res.detail.userInfo) {
       //用户按了允许授权按钮
       var that = this;
       // 获取到用户的信息了，打印到控制台上看下
       console.log("用户的信息如下：");
-      console.log(e.detail.userInfo);
+      console.log(res.detail.userInfo);
       //授权成功后,通过改变 isHide 的值，让实现页面显示出来，把授权页面隐藏起来
       that.setData({
         isHide: false
       });
+      wx.switchTab({
+        url: '/pages/index/index',
+        fail:(res)=>{
+          console.log(res)
+        },
+        success:(res)=>{
+          console.log(res)
+        }
+      })
     } else {
       //用户按了拒绝按钮
       wx.showModal({
@@ -64,7 +84,16 @@ Page({
         }
       } else {
         wx.showToast({
-          title: '校验通过'
+          title: '登录成功'
+        })
+        wx.switchTab({
+          url: '/pages/index/index',
+          fail:(res)=>{
+            console.log(res)
+          },
+          success:(res)=>{
+            console.log(res)
+          }
         })
       }
     })
