@@ -5,6 +5,7 @@
     position: relative;
     display: flex;
     flex-direction: row;
+    margin: 0 0 125rpx 0;
 }
 
 .my-align-panel{

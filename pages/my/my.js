@@ -9,6 +9,9 @@ Page({
     userInfo:{
       headImgUrl:"",//用户头像
       nickName:"",//用户昵称
+    },
+    iconUrl:{
+      setting:"/icons/setting.png"
     }
 
   },

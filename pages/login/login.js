@@ -83,20 +83,41 @@ Page({
 
         }
       } else {
-        wx.showToast({
-          title: '登录成功'
-        })
-        wx.switchTab({
-          url: '/pages/index/index',
-          fail:(res)=>{
-            console.log(res)
-          },
-          success:(res)=>{
-            console.log(res)
-          }
-        })
+        var that=this;
+        //如果用户名密码正确
+        if(that.isAuthorized())
+        {
+          wx.showToast({
+            title: '登录成功'
+          })
+          wx.switchTab({
+            url: '/pages/index/index',
+            fail:(res)=>{
+              console.log(res)
+            },
+            success:(res)=>{
+              console.log(res)
+            }
+          })
+        }
+        else
+        {
+          this.setData({
+            error: '用户名或密码错误'
+          })
+        }
       }
     })
+  },
+  isAuthorized:function(){
+    var that=this;
+    var username=that.data.formData['username'];
+    var password=that.data.formData['password'];
+    if(username=='123' && password=='1234')
+    {
+      return true;
+    }
+    return false;
   },
   /**
    * 生命周期函数--监听页面加载

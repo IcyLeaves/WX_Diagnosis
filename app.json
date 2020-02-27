@@ -2,7 +2,8 @@
   "pages": [
     "pages/login/login",
     "pages/index/index",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/my/setting"
   ],
   "usingComponents":{
     "mp-form": "/weui-miniprogram/form/form",
@@ -10,7 +11,8 @@
     "mp-cell":"/weui-miniprogram/cell/cell",
     "mp-toptips":"/weui-miniprogram/toptips/toptips",
     "mp-checkbox-group":"/weui-miniprogram/checkbox-group/checkbox-group",
-    "mp-checkbox":"/weui-miniprogram/checkbox/checkbox"
+    "mp-checkbox":"/weui-miniprogram/checkbox/checkbox",
+    "mp-halfScreenDialog": "/weui-miniprogram/half-screen-dialog/half-screen-dialog"
   },
   "window": {
     "backgroundTextStyle": "dark",

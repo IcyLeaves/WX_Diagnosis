@@ -1,9 +1,9 @@
 <!-- 充值信息 -->
 <view class="weui-panel">
-  <view bindtap='logout' class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+  <view bindtap='onDiagnosisBtnClick' class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <!-- 这里之后可以放图标 -->
     <view class="weui-cell__bd weui-cell_primary margin-left-icon">
-      <view class='text-size-09 init-wordspace'>充值信息</view>
+      <view class='text-size-09 init-wordspace'>智能诊断辅助服务</view>
     </view>
     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
   </view>

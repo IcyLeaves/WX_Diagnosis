@@ -1,10 +1,11 @@
-// pages/index/index.js
+// pages/my/setting.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+show:false,
 
   },
 
@@ -14,17 +15,23 @@ Page({
   onLoad: function (options) {
 
   },
-  onDiagnosisBtnClick:function(btn){
-wx.switchTab({
-  url: '/pages/my/my',
-  success: (result)=>{
-    console.log("重定向成功")
+  confirmLogOut: function () {
+    this.setData({
+      show:true
+    })
   },
-  fail: (msg)=>{
-    console.log(msg)
+  onLogOutConfirm:function(){
+    wx.reLaunch({
+      url: '/pages/login/login',
+      success: (result)=>{
+        
+      },
+      fail: ()=>{},
+      complete: ()=>{}
+    });
   },
-  complete: ()=>{}
-});
+  onLogOutCancel:function(e){
+    this.selectComponent('#halfDialog').close(e);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

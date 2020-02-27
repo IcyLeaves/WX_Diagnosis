@@ -10,7 +10,7 @@
                 <input bindinput="formInputChange" data-field="username" class="weui-input" placeholder="请输入用户名" />
             </mp-cell>
             <mp-cell prop="password" title="密码" ext-class="">
-                <input bindinput="formInputChange" data-field="password" class="weui-input" placeholder="请输入密码" />
+                <input type="password" bindinput="formInputChange" data-field="password" class="weui-input" placeholder="请输入密码" />
             </mp-cell>
         </mp-cells>
     </mp-form>
