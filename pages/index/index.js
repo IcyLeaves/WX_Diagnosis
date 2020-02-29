@@ -14,7 +14,18 @@ Page({
   onLoad: function (options) {
 
   },
-
+  onDiagnosisBtnClick:function(btn){
+wx.switchTab({
+  url: '/pages/my/my',
+  success: (result)=>{
+    console.log("重定向成功")
+  },
+  fail: (msg)=>{
+    console.log(msg)
+  },
+  complete: ()=>{}
+});
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -1,10 +1,23 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/login/login",
+    "pages/index/index",
+    "pages/my/my",
+    "pages/my/setting"
   ],
+  "usingComponents":{
+    "mp-form": "/weui-miniprogram/form/form",
+    "mp-cells":"/weui-miniprogram/cells/cells",
+    "mp-cell":"/weui-miniprogram/cell/cell",
+    "mp-toptips":"/weui-miniprogram/toptips/toptips",
+    "mp-checkbox-group":"/weui-miniprogram/checkbox-group/checkbox-group",
+    "mp-checkbox":"/weui-miniprogram/checkbox/checkbox",
+    "mp-halfScreenDialog": "/weui-miniprogram/half-screen-dialog/half-screen-dialog"
+  },
   "window": {
     "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#0094ff",
+    "backgroundColor":"#eeeeee",
+    "navigationBarBackgroundColor": "#00B26A",
     "navigationBarTitleText":"糖尿病辅助检测",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true,
@@ -12,7 +25,7 @@
   },
   "tabBar": {
     "color": "#000",
-    "selectedColor": "#0094ff",
+    "selectedColor": "#00B26A",
     "backgroundColor": "#F5F7F7",
     "borderStyle": "white",
     "list": [
@@ -23,7 +36,7 @@
         "selectedIconPath": "icons/index-active.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/my/my",
         "text": "我的",
         "iconPath": "icons/my.png",
         "selectedIconPath": "icons/my-active.png"

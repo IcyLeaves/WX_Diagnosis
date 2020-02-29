@@ -1,0 +1,43 @@
+/* pages/my/my.wxss */
+.my-info-panel {
+    background-color: #00B26A;
+    height: 300rpx;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 125rpx 0;
+}
+
+.my-align-panel{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 80%;
+}
+
+.my-head-image{
+    width: 100rpx;
+    height: 100rpx;
+    margin:20rpx 10rpx 20rpx 10rpx;
+    border-radius: 50%;
+    border: 3px solid #eee;
+}
+
+.my-nick-name{
+    font-size: 40rpx;
+    font-weight: bold;
+    color: white;
+}
+
+.my-radius-panel {
+    background-color: white;
+    border-radius: 20rpx;
+    width: 80%;
+    height: 200rpx;
+    margin: 200rpx 75rpx 200rpx 75rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
