@@ -3,7 +3,8 @@
     "pages/login/login",
     "pages/index/index",
     "pages/my/my",
-    "pages/my/setting"
+    "pages/my/setting",
+    "pages/my/info"
   ],
   "usingComponents":{
     "mp-form": "/weui-miniprogram/form/form",

@@ -2,6 +2,11 @@ future
 -
 
 now
-- 禁止下拉："pages/my/my","pages/my/setting"
+-
 
 before
+- 联系方式 家庭状况 个人身份信息表单
+- 修改各页面导航栏的标题
+- 创建"pages/my/info"
+
+- 禁止下拉："pages/my/my","pages/my/setting"
