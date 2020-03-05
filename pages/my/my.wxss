@@ -41,3 +41,7 @@
     justify-content: center;
     position: absolute;
 }
+
+.weui-cell{
+    margin-bottom:20px;
+}

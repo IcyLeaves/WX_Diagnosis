@@ -11,7 +11,8 @@ Page({
       nickName:"",//用户昵称
     },
     iconUrl:{
-      setting:"/icons/setting.png"
+      setting:"/icons/setting.png",
+      info:"/icons/info.png"
     }
 
   },
