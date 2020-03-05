@@ -1,6 +1,5 @@
 var myValidate = require('../../utils/info-form-validate.js')
-var staticData=require('../../utils/static-data.js')
-
+var staticData = require('../../utils/static-data.js')
 const validateId = function (rule, value, param, models) {
   if (typeof (value) == undefined || value == null || value == "") return "身份证必填";
   if (!myValidate.checkIDCard(value)) {
@@ -12,18 +11,22 @@ const validateId = function (rule, value, param, models) {
 
 var appInst = getApp();
 
-// pages/my/info.js
 Page({
-  data: {
-    showTopTips: false,
 
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    navbar: ['个人信息', '问诊信息', '检查报告', '报告查看'],
+    currentTab: 0,
+
+    //表单相关
+    showTopTips: false,
     nations: staticData.nations,
     familyDisease: ["无", "有"],
     marriage: ["未婚", "已婚"],
 
-    formData: {
-
-    },
+    formData: {},
     rules: [{
       name: 'name',
       rules: {
@@ -87,14 +90,12 @@ Page({
       name: 'address',
       rules: {}
     }],
-
-    // 额外内容
     // 1.是否填了身份证号，填完后马上校验，校验成功则显示出生日期和性别和年龄
     isIdCorrect: false
   },
   // Page展示前调用
   onReady: function (options) {
-    var isCorrect=myValidate.checkIDCard(appInst.globalData.userTable['id']);
+    var isCorrect = myValidate.checkIDCard(appInst.globalData.userTable['id']);
     //提取表单数据
     this.setData({
       ['formData.name']: appInst.globalData.userTable['name'],
@@ -111,49 +112,9 @@ Page({
       ['formData.date']: appInst.globalData.userTable['birthday'],
       ['formData.familyDiseaseIndex']: appInst.globalData.userTable['familyDiseaseIndex'],
       ['formData.marriageIndex']: appInst.globalData.userTable['marriageIndex'],
-      isIdCorrect:isCorrect
+      isIdCorrect: isCorrect
     })
   },
-  // radioChange: function (e) {
-  //   console.log('radio发生change事件，携带value值为：', e.detail.value);
-
-  //   var radioItems = this.data.radioItems;
-  //   for (var i = 0, len = radioItems.length; i < len; ++i) {
-  //     radioItems[i].checked = radioItems[i].value == e.detail.value;
-  //   }
-
-  //   this.setData({
-  //     radioItems: radioItems,
-  //     [`formData.radio`]: e.detail.value
-  //   });
-  // },
-  // checkboxChange: function (e) {
-  //   console.log('checkbox发生change事件，携带value值为：', e.detail.value);
-
-  //   var checkboxItems = this.data.checkboxItems,
-  //     values = e.detail.value;
-  //   for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
-  //     checkboxItems[i].checked = false;
-
-  //     for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
-  //       if (checkboxItems[i].value == values[j]) {
-  //         checkboxItems[i].checked = true;
-  //         break;
-  //       }
-  //     }
-  //   }
-
-  //   this.setData({
-  //     checkboxItems: checkboxItems,
-  //     [`formData.checkbox`]: e.detail.value
-  //   });
-  // },
-  // bindDateChange: function (e) {
-  //   this.setData({
-  //     date: e.detail.value,
-  //     [`formData.date`]: e.detail.value
-  //   })
-  // },
   formInputChange: function (e) {
     const {
       field
@@ -187,30 +148,24 @@ Page({
           this.setData({
             error: errors[firstError[0]].message
           })
-
         }
       } else {
-        //保存表单数据
-        appInst.globalData.userTable['name'] = this.data.formData['name'];
-        appInst.globalData.userTable['sex'] = this.data.formData['sex'];
-        appInst.globalData.userTable['age'] = this.data.formData['age'];
-        appInst.globalData.userTable['careId'] = this.data.formData['careId'];
-        appInst.globalData.userTable['id'] = this.data.formData['id'];
-        appInst.globalData.userTable['tel'] = this.data.formData['tel'];
-        appInst.globalData.userTable['emergencyName'] = this.data.formData['emergencyName'];
-        appInst.globalData.userTable['emergencyTel'] = this.data.formData['emergencyTel'];
-        appInst.globalData.userTable['region'] = this.data.formData['region'];
-        appInst.globalData.userTable['address'] = this.data.formData['address'];
-        appInst.globalData.userTable['nationIndex'] = this.data.formData['nationIndex'];
-        appInst.globalData.userTable['birthday'] = this.data.formData['date'];
-        appInst.globalData.userTable['familyDiseaseIndex'] = this.data.formData['familyDiseaseIndex'];
-        appInst.globalData.userTable['marriageIndex'] = this.data.formData['marriageIndex'];
-        console.log(appInst.globalData);
         wx.showToast({
           title: '保存成功'
-        })
+        });
+        this.setData({
+          currentTab: 1
+        });
       }
     })
-  }
-
+  },
+  //点击切换，滑块index赋值
+  navbarSwitch: function (e) {
+    if (this.data.currentTab >= e.currentTarget.dataset.idx)
+      this.setData({
+        currentTab: e.currentTarget.dataset.idx
+      })
+    //全局变量
+    //app.globalData.currentTab = e.currentTarget.dataset.idx;
+  },
 })
