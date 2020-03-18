@@ -20,6 +20,5 @@ from wxDiagnosis import views as wx_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('create/', wx_views.create),
-    path('getlist/', wx_views.getlist),
+    path('login/', wx_views.login),
 ]

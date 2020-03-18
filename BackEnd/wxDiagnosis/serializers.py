@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
-from wxDiagnosis.models import WxdiagnosisPerson
+from wxDiagnosis.models import User
 
 
-class PersonSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     # ModelSerializer和Django中ModelForm功能相似
     # Serializer和Django中Form功能相似
     class Meta:
-        model = WxdiagnosisPerson
+        model = User
         # 和"__all__"等价
-        fields = ('id', 'name', 'age')
+        fields = ('id', 'username', 'password', 'openid')

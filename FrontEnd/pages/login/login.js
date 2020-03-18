@@ -1,3 +1,5 @@
+var appInst =  getApp();
+
 // pages/login/login.js
 Page({
   /**
@@ -13,17 +15,17 @@ Page({
         required: true,
         message: '请填写用户名'
       }
-    },{
-      name:'password',
-      rules:[{
-        required:true,
-        message:'请填写密码'
-      },{
-        minlength:4,
-        message:'密码不能少于4位'
-      },{
-        maxlength:16,
-        message:'密码不能多于16位'
+    }, {
+      name: 'password',
+      rules: [{
+        required: true,
+        message: '请填写密码'
+      }, {
+        minlength: 4,
+        message: '密码不能少于4位'
+      }, {
+        maxlength: 16,
+        message: '密码不能多于16位'
       }]
     }]
   },
@@ -48,10 +50,10 @@ Page({
       });
       wx.switchTab({
         url: '/pages/index/index',
-        fail:(res)=>{
+        fail: (res) => {
           console.log(res)
         },
-        success:(res)=>{
+        success: (res) => {
           console.log(res)
         }
       })
@@ -83,41 +85,51 @@ Page({
 
         }
       } else {
-        var that=this;
+        var that = this;
+        that.isAuthorized()
         //如果用户名密码正确
-        if(that.isAuthorized())
-        {
+        
+      }
+    })
+  },
+  isAuthorized: function () {
+    var that = this;
+    var username = that.data.formData['username'];
+    var password = that.data.formData['password'];
+    wx.request({
+      url:appInst.globalData.myHost+"login/",
+      method: "POST",
+      data: {
+        username:username,
+        password:password
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      success: function (res) {
+        console.log(res.data);
+        if (res.data.msg=='success') {
           wx.showToast({
             title: '登录成功'
           })
           wx.switchTab({
             url: '/pages/index/index',
-            fail:(res)=>{
+            fail: (res) => {
               console.log(res)
             },
-            success:(res)=>{
+            success: (res) => {
               console.log(res)
             }
           })
-        }
-        else
-        {
-          this.setData({
+        } else {
+          that.setData({
             error: '用户名或密码错误'
           })
         }
-      }
-    })
-  },
-  isAuthorized:function(){
-    var that=this;
-    var username=that.data.formData['username'];
-    var password=that.data.formData['password'];
-    if(username=='123' && password=='1234')
-    {
-      return true;
-    }
-    return false;
+      },
+    });
+    //if (username == '123' && password == '1234') {
+    return isAuth;
   },
   /**
    * 生命周期函数--监听页面加载

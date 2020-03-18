@@ -57,3 +57,7 @@ page {
 .subpage {
     margin-top: 85rpx;
 }
+
+.gray-form mp-cell{
+    color:gray;
+}
