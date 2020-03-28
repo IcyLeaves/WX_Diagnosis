@@ -1,4 +1,4 @@
-var appInst =  getApp();
+var appInst = getApp();
 
 // pages/login/login.js
 Page({
@@ -48,20 +48,38 @@ Page({
       that.setData({
         isHide: false
       });
-      wx.switchTab({
-        url: '/pages/index/index',
-        fail: (res) => {
-          console.log(res)
+      console.log("OpenId为");
+      console.log(appInst.globalData.myOpenId);
+      wx.request({
+        url: appInst.globalData.myHost + "login/",
+        method: "POST",
+        data: {
+          openid: appInst.globalData.myOpenId
         },
-        success: (res) => {
-          console.log(res)
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        success: function (res) {
+          appInst.globalData.myUserId = res.data.userid;
+          console.log(appInst.globalData.myUserId)
+
+          wx.switchTab({
+            url: '/pages/index/index',
+            fail: (res) => {
+              console.log(res)
+            },
+            success: (res) => {
+              console.log(res)
+            }
+          })
         }
-      })
+      });
+
     } else {
       //用户按了拒绝按钮
       wx.showModal({
         title: '警告',
-        content: '您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
+        content: '您点击了拒绝授权，小程序部分功能将无法访问！',
         showCancel: false,
         confirmText: '返回授权',
         success: function (res) {
@@ -88,7 +106,7 @@ Page({
         var that = this;
         that.isAuthorized()
         //如果用户名密码正确
-        
+
       }
     })
   },
@@ -97,18 +115,21 @@ Page({
     var username = that.data.formData['username'];
     var password = that.data.formData['password'];
     wx.request({
-      url:appInst.globalData.myHost+"login/",
+      url: appInst.globalData.myHost + "login/",
       method: "POST",
       data: {
-        username:username,
-        password:password
+        username: username,
+        password: password
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       success: function (res) {
         console.log(res.data);
-        if (res.data.msg=='success') {
+        if (res.data.msg == 'success') {
+          appInst.globalData.myUserId = res.data.userid;
+          console.log(appInst.globalData.myUserId)
+
           wx.showToast({
             title: '登录成功'
           })
@@ -130,6 +151,11 @@ Page({
     });
     //if (username == '123' && password == '1234') {
     return isAuth;
+  },
+  signUp: function () {
+    wx.navigateTo({
+      url: '/pages/signup/signup'
+    })
   },
   /**
    * 生命周期函数--监听页面加载

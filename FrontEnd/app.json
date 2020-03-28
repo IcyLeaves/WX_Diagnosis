@@ -5,7 +5,8 @@
     "pages/my/my",
     "pages/my/setting",
     "pages/my/info",
-    "pages/diagnosis/diagnosis"
+    "pages/diagnosis/diagnosis",
+    "pages/signup/signup"
   ],
   "usingComponents":{
     "mp-form": "/weui-miniprogram/form/form",

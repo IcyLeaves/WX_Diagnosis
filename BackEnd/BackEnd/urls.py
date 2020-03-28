@@ -21,4 +21,6 @@ from wxDiagnosis import views as wx_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', wx_views.login),
+    path('signup/', wx_views.sign_up),
+    path('getOpenId/', wx_views.get_openid)
 ]

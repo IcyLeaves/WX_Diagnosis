@@ -1,7 +1,10 @@
+import json
+
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
+import requests
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -45,14 +48,47 @@ def index(request):
 
 @api_view(['POST'])
 def login(request, format=None):
-    print(request.data)
     usr = request.data.get('username')
     pwd = request.data.get('password')
-    obj = User.objects.filter(username=usr, password=pwd).first()
+    openid = request.data.get('openid')
+    obj = None
+    # 微信授权登录
+    if openid:
+        User.objects.get_or_create(openid=openid)
+        obj = User.objects.get(openid=openid)
+
+        # serializer=UserSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data,status=status.HTTP_200_OK)
+    # 用户名登陆
+    else:
+        obj = User.objects.filter(username=usr, password=pwd).first()
     if obj:
-        return Response(data={'msg': 'success'}, status=status.HTTP_200_OK)
+        return Response(data={'msg': 'success', 'userid': obj.pk}, status=status.HTTP_200_OK)
     return Response(data={'msg': 'failed'})
-    # serializer=UserSerializer(data=request.data)
-    # if serializer.is_valid():
-    #     serializer.save()
-    #     return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def sign_up(request, format=None):
+    usr = request.data.get('username')
+    pwd = request.data.get('password')
+    obj = User.objects.filter(username=usr).first()
+    if obj:
+        return Response(data={'msg': 'rename'})
+    User.objects.create(username=usr, password=pwd)
+    return Response(data={'msg': 'signed'}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def get_openid(request, format=None):
+    code = request.POST.get('code')
+    print(code)
+    url = "https://api.weixin.qq.com/sns/jscode2session?appid=wx0c12e472ccbcc246&" \
+          "secret=5295bccf15482c1798e82b5a4c3a7f48&js_code=%s&" \
+          "grant_type=authorization_code" % code
+    result = requests.get(url).content.decode("utf-8")
+    print(result)
+    result = json.loads(result)['openid']
+    # print(data)
+    return Response(data={'openid': result}, status=status.HTTP_200_OK)
