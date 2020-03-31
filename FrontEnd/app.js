@@ -3,6 +3,7 @@ var appInst=getApp();
 App({
   onLaunch: function () {
     var that=this;
+   
      // 登录
      wx.login({
       success: function(res) {
@@ -32,26 +33,24 @@ App({
         }
       }
     });
+    wx.getSetting({
+      success: (res) => {
+        console.log("app加载，授权信息如下:")
+        console.log(res)
+        if (res.authSetting['scope.userInfo'] == true) {
+          wx.hideLoading();
+          wx.reLaunch({
+            url: '/pages/enter/enter',
+          })
+        }
+      },
+    });
+
   },
   globalData: {
     myHost:"http://127.0.0.1:8000/",
     myOpenId:'',
     myUserId:-1,
-    userTable:{
-      name:"",
-      sex:"",
-      age:0,
-      careId:"",
-      id:"",
-      tel:"",
-      emergencyName:"",
-      emergencyTel:"",
-      region:'',
-      address:"",
-      nationIndex:0,
-      birthday:"",
-      familyDiseaseIndex:0,
-      marriageIndex:0
-    }
+    userInfo:null
   }
 })

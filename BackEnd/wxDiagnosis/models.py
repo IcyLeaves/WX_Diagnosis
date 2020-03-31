@@ -12,13 +12,12 @@ class WxdiagnosisPerson(models.Model):
 
 
 class User(models.Model):
-    username = models.CharField(max_length=20, blank=True, null=True)
-    password = models.CharField(max_length=20, blank=True, null=True)
     openid = models.CharField(max_length=40, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'user'
+
 
 class PatientBasicinfo(models.Model):
     userid = models.IntegerField(primary_key=True)

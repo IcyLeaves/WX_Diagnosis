@@ -1,0 +1,12 @@
+<view class='center-poster'>
+    <image class='center-image' src="{{iconUrl['grant']}}" mode='scaleToFill'></image>
+</view>
+<view class='center-container'>
+    <view class='content-text'>
+        <view>申请获取以下权限</view>
+        <view>· 获得你的公开信息(昵称,头像,手机等)</view>
+    </view>
+    <button class='' type='primary' open-type='getUserInfo' bindgetuserinfo='bindGetUserInfo'>
+        授权登录
+    </button>
+</view>

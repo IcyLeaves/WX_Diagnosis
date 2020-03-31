@@ -1,0 +1,29 @@
+.center-container{
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center-poster{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300rpx;
+}
+
+.center-image{
+    display: flex;
+    justify-content: center;
+    height: 150rpx;
+    width: 150rpx;
+}
+
+.content-text{
+    color: gray;
+}
+
+.content-text view{
+    margin:40rpx 0 40rpx 0;
+}

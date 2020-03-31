@@ -1,0 +1,23 @@
+<view class="center-container">
+    <view class="big-title">
+        <text>糖尿病辅助诊断系统</text>
+    </view>
+    <view class="title">请选择您的身份：</view>
+    <view class="button-list">
+        <view bindtap="toPatient" class="platform" hover-class="platform-press">
+            <image class="icon" src="{{iconUrl['patient']}}" mode="scaleToFill"></image>
+            <view class="name">患　者</view>
+        </view>
+        <view class="platform" hover-class="platform-press">
+            <image class="icon" src="{{iconUrl['doctor']}}" mode="scaleToFill"></image>
+            <view class="name">医　生</view>
+        </view>
+        <view class="platform" hover-class="platform-press">
+            <image class="icon" src="{{iconUrl['administor']}}" mode="scaleToFill"></image>
+            <view class="name">管理员</view>
+        </view>
+    </view>
+<view class="center-poster">
+    <image class="bind-image" mode="scaleToFill" src="/icons/main-icon.png"></image>
+</view>
+</view>

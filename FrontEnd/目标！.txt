@@ -15,7 +15,7 @@ now
 
 
 before
-- 退出登录要清空用户信息
+- 退出登录要清空用户信息，登录时要提取数据库里的openId
 - 注册用户后可以绑定微信账户
 - 设计了用户基本信息表patient_basicInfo
 - update和get info

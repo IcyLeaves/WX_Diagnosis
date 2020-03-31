@@ -1,0 +1,72 @@
+
+.title{
+    font-size: 30rpx;
+    color:white;
+}
+
+.button-list{
+    width: 40%;
+}
+
+.platform .icon{
+    width:75rpx;
+    height:75rpx;
+    margin-right: 50rpx;
+}
+
+.center-container{
+    display:flex;
+    flex-direction: column;
+align-items:center;
+justify-content:center;
+}
+
+.platform{
+    margin:30rpx 0 30rpx 0;
+    padding:20rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border-radius: 15rpx;
+    /* justify-content: center;  */
+}
+.platform-press{
+    opacity: 0.85; 
+}
+
+.platform .name{
+    font-size: 35rpx;
+    font-weight: bold;
+}
+
+.big-title{
+    display: flex;
+    flex-direction: column;
+align-items:center;
+justify-content:center;
+}
+.big-title text{
+    margin:90rpx 0 90rpx 0;
+    color:white;
+    font-size:50rpx;
+    font-weight: bold;
+}
+
+.center-poster {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300rpx;
+}
+
+.bind-image{
+    display: flex;
+    justify-content: center;
+    height:200rpx;
+    width: 200rpx;
+}
+page{
+    background-color: #00B26A;
+}
