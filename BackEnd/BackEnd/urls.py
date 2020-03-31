@@ -22,5 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', wx_views.login),
     path('signup/', wx_views.sign_up),
-    path('getOpenId/', wx_views.get_openid)
+    path('getOpenId/', wx_views.get_openid),
+    path('bind/', wx_views.bind),
+    path('updatePatientInfo/', wx_views.patient_info_update),
+    path('getPatientInfo/<user_id>/', wx_views.patient_info_get)
 ]

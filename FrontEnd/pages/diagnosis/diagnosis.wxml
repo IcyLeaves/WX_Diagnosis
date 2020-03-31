@@ -78,7 +78,7 @@
               <view class="weui-input">{{diabeteType[formData1.diabeteTypeIndex]}}</view>
             </picker>
           </mp-cell>
-        </mp-cells>s
+        </mp-cells>
         <mp-cells title="症状描述">
           <mp-cell prop="discribe">
             <textarea bindchange="form1InputChange" data-field="discribe" value='{{formData1.discribe}}' placeholder="请描述病症" class="weui-textarea" style="height: 3.3em" />

@@ -1,7 +1,7 @@
 var appInst = getApp();
-
-// pages/login/login.js
+// pages/login/bind.js
 Page({
+
   /**
    * 页面的初始数据
    */
@@ -37,70 +37,6 @@ Page({
       [`formData.${field}`]: e.detail.value
     })
   },
-  bindGetUserInfo: function (res) {
-    if (res.detail.userInfo) {
-      //用户按了允许授权按钮
-      var that = this;
-      // 获取到用户的信息了，打印到控制台上看下
-      console.log("用户的信息如下：");
-      console.log(res.detail.userInfo);
-      //授权成功后,通过改变 isHide 的值，让实现页面显示出来，把授权页面隐藏起来
-      that.setData({
-        isHide: false
-      });
-      console.log("OpenId为");
-      console.log(appInst.globalData.myOpenId);
-      wx.request({
-        url: appInst.globalData.myHost + "login/",
-        method: "POST",
-        data: {
-          openid: appInst.globalData.myOpenId
-        },
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        success: function (res) {
-          console.log(res)
-          if (res.data.msg=='new') {
-            //如果是新账户，相当于要求绑定网页账户
-            wx.navigateTo({
-              url:'/pages/login/bind',
-            })
-          } else if(res.data.msg=='exist') {
-            // 如果是已有帐户，直接跳转，
-            appInst.globalData.myUserId = res.data.userid;
-            console.log("已有帐户id："+appInst.globalData.myUserId)
-  
-            wx.switchTab({
-              url: '/pages/index/index',
-              fail: (res) => {
-                console.log(res)
-              },
-              success: (res) => {
-                console.log(res)
-              }
-            })
-          }
-          
-        }
-      });
-
-    } else {
-      //用户按了拒绝按钮
-      wx.showModal({
-        title: '警告',
-        content: '您点击了拒绝授权，小程序部分功能将无法访问！',
-        showCancel: false,
-        confirmText: '返回授权',
-        success: function (res) {
-          // 用户没有授权成功，不需要改变 isHide 的值
-          if (res.confirm) {
-            console.log('用户点击了“返回授权”');
-          }
-        }
-      })
-    }
-  },
   submitForm() {
     this.selectComponent('#form').validate((valid, errors) => {
       console.log('valid', valid, errors)
@@ -125,11 +61,12 @@ Page({
     var username = that.data.formData['username'];
     var password = that.data.formData['password'];
     wx.request({
-      url: appInst.globalData.myHost + "login/",
+      url: appInst.globalData.myHost + "bind/",
       method: "POST",
       data: {
         username: username,
-        password: password
+        password: password,
+        openid:appInst.globalData.myOpenId
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -138,11 +75,10 @@ Page({
         console.log(res.data);
         if (res.data.msg == 'success') {
           appInst.globalData.myUserId = res.data.userid;
-          appInst.globalData.myOpenId=res.data.openid;
           console.log(appInst.globalData.myUserId)
 
           wx.showToast({
-            title: '登录成功'
+            title: '绑定成功'
           })
           wx.switchTab({
             url: '/pages/index/index',
@@ -171,7 +107,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

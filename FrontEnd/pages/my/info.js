@@ -1,5 +1,5 @@
 var myValidate = require('../../utils/info-form-validate.js')
-var staticData=require('../../utils/static-data.js')
+var staticData = require('../../utils/static-data.js')
 
 const validateId = function (rule, value, param, models) {
   if (typeof (value) == undefined || value == null || value == "") return "身份证必填";
@@ -92,27 +92,48 @@ Page({
     // 1.是否填了身份证号，填完后马上校验，校验成功则显示出生日期和性别和年龄
     isIdCorrect: false
   },
+  //取地区index
+
   // Page展示前调用
   onReady: function (options) {
-    var isCorrect=myValidate.checkIDCard(appInst.globalData.userTable['id']);
-    //提取表单数据
-    this.setData({
-      ['formData.name']: appInst.globalData.userTable['name'],
-      ['formData.sex']: appInst.globalData.userTable['sex'],
-      ['formData.age']: appInst.globalData.userTable['age'],
-      ['formData.careId']: appInst.globalData.userTable['careId'],
-      ['formData.id']: appInst.globalData.userTable['id'],
-      ['formData.tel']: appInst.globalData.userTable['tel'],
-      ['formData.emergencyName']: appInst.globalData.userTable['emergencyName'],
-      ['formData.emergencyTel']: appInst.globalData.userTable['emergencyTel'],
-      ['formData.region']: appInst.globalData.userTable['region'],
-      ['formData.address']: appInst.globalData.userTable['address'],
-      ['formData.nationIndex']: appInst.globalData.userTable['nationIndex'],
-      ['formData.date']: appInst.globalData.userTable['birthday'],
-      ['formData.familyDiseaseIndex']: appInst.globalData.userTable['familyDiseaseIndex'],
-      ['formData.marriageIndex']: appInst.globalData.userTable['marriageIndex'],
-      isIdCorrect:isCorrect
+    var that = this;
+    wx.request({
+      url: appInst.globalData.myHost + 'getPatientInfo/' + appInst.globalData.myUserId + '/',
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.statusCode == 200) {
+          var isCorrect = myValidate.checkIDCard(res.data['idcard']);
+          //转化表单中的region，按空格分割字符串
+          var regionList = new Array();
+          regionList = res.data['region'].split(" ");
+          //转化表单中的nation，查找index
+          var nationIndex = staticData.getNationIndex(res.data['nation']);
+          //提取表单数据
+          that.setData({
+            ['formData.name']: res.data['name'],
+            ['formData.sex']: res.data['gender'] == 'M' ? '男' : '女',
+            ['formData.age']: res.data['age'],
+            ['formData.careId']: res.data['careid'],
+            ['formData.id']: res.data['idcard'],
+            ['formData.tel']: res.data['tel'],
+            ['formData.emergencyName']: res.data['emername'],
+            ['formData.emergencyTel']: res.data['emertel'],
+            ['formData.region']: regionList,
+            ['formData.address']: res.data['address'],
+            ['formData.nationIndex']: nationIndex,
+            ['formData.date']: res.data['birthday'],
+            ['formData.familyDiseaseIndex']: res.data['familydisease'] == 'Y' ? 1 : 0,
+            ['formData.marriageIndex']: res.data['marriage'] == 'N' ? 0 : 1,
+            isIdCorrect: isCorrect
+          })
+        }
+      }
     })
+
   },
   // radioChange: function (e) {
   //   console.log('radio发生change事件，携带value值为：', e.detail.value);
@@ -190,21 +211,37 @@ Page({
 
         }
       } else {
-        //保存表单数据
-        appInst.globalData.userTable['name'] = this.data.formData['name'];
-        appInst.globalData.userTable['sex'] = this.data.formData['sex'];
-        appInst.globalData.userTable['age'] = this.data.formData['age'];
-        appInst.globalData.userTable['careId'] = this.data.formData['careId'];
-        appInst.globalData.userTable['id'] = this.data.formData['id'];
-        appInst.globalData.userTable['tel'] = this.data.formData['tel'];
-        appInst.globalData.userTable['emergencyName'] = this.data.formData['emergencyName'];
-        appInst.globalData.userTable['emergencyTel'] = this.data.formData['emergencyTel'];
-        appInst.globalData.userTable['region'] = this.data.formData['region'];
-        appInst.globalData.userTable['address'] = this.data.formData['address'];
-        appInst.globalData.userTable['nationIndex'] = this.data.formData['nationIndex'];
-        appInst.globalData.userTable['birthday'] = this.data.formData['date'];
-        appInst.globalData.userTable['familyDiseaseIndex'] = this.data.formData['familyDiseaseIndex'];
-        appInst.globalData.userTable['marriageIndex'] = this.data.formData['marriageIndex'];
+        var that = this;
+        wx.request({
+          url: appInst.globalData.myHost + 'updatePatientInfo/',
+          method: 'POST',
+          data: {
+            userid: appInst.globalData.myUserId,
+            name: that.data.formData['name'],
+            careid: that.data.formData['careId'],
+            idcard: that.data.formData['id'],
+            birthday: that.data.formData['date'],
+            gender: that.data.formData['sex'] == '男' ? 'M' : 'W',
+            age: that.data.formData['age'],
+            nation: staticData.nations[that.data.formData['nationIndex']],
+            tel: that.data.formData['tel'],
+            emername: that.data.formData['emergencyName'],
+            emertel: that.data.formData['emergencyTel'],
+            familydisease: that.data.formData['familydisease'] == '有' ? 'Y' : 'N',
+            marriage: that.data.formData['marriage'] == '未婚' ? 'N' : 'Y',
+            region: that.data.formData['region'][0] + ' ' +
+              that.data.formData['region'][1] + ' ' +
+              that.data.formData['region'][2],
+            address: that.data.formData['address'],
+          },
+          header: {
+            'Content-Type': 'application/json'
+          },
+          success: function (res) {
+            console.log(res)
+          }
+        })
+        console.log('全局数据如下');
         console.log(appInst.globalData);
         wx.showToast({
           title: '保存成功'

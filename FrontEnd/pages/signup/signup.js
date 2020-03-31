@@ -87,7 +87,7 @@ Page({
           wx.showToast({
             title: '注册成功'
           })
-          wx.navigateTo({
+          wx.reLaunch({
             url: '/pages/login/login',
           })
         } else {

@@ -1,5 +1,5 @@
 <view class="login-poster">
-    <image class="login-image" mode="scaleToFill" src="/icons/planet-active.png"></image>
+    <image class="login-image" mode="scaleToFill" src="/icons/login.png"></image>
 </view>
 <view class="login-container">
     <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>

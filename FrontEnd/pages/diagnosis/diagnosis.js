@@ -109,48 +109,73 @@ Page({
     ],
     formData1: {
       diabeteTypeIndex: 0
-    }
+    },
+    rules1:[{
+      name:'feature',
+      rules:{}
+    },{
+      name:'diabeteTypeIndex',
+      rules:{}
+    }]
   },
   // Page展示前调用
   onReady: function (options) {
-    if (appInst.globalData.userTable['age'] <= 0) {
-      wx.showModal({
-        title: '提示',
-        content: '进行辅助诊断需要完善个人信息，是否现在去完善？',
-        confirmText: '现在就去',
-        cancelText: '暂不完善',
-        success(res) {
-          if (res.confirm) {
-            console.log('用户点击确定');
-            wx.redirectTo({
-              url: '/pages/my/info'
-            })
-          } else if (res.cancel) {
-            console.log('用户点击取消');
-            wx.navigateBack({
-              delta: 1
-            })
-          }
+    var that = this;
+    wx.request({
+      url: appInst.globalData.myHost + 'getPatientInfo/' + appInst.globalData.myUserId + '/',
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res);
+        //转化表单中的region，按空格分割字符串
+        var regionList = new Array();
+        regionList = res.data['region'].split(" ");
+        //转化表单中的nation，查找index
+        var nationIndex = staticData.getNationIndex(res.data['nation']);
+        //提取表单数据
+        that.setData({
+          ['formData.name']: res.data['name'],
+          ['formData.sex']: res.data['gender'] == 'M' ? '男' : '女',
+          ['formData.age']: res.data['age'],
+          ['formData.careId']: res.data['careid'],
+          ['formData.id']: res.data['idcard'],
+          ['formData.tel']: res.data['tel'],
+          ['formData.emergencyName']: res.data['emername'],
+          ['formData.emergencyTel']: res.data['emertel'],
+          ['formData.region']: regionList,
+          ['formData.address']: res.data['address'],
+          ['formData.nationIndex']: nationIndex,
+          ['formData.date']: res.data['birthday'],
+          ['formData.familyDiseaseIndex']: res.data['familydisease'] == 'Y' ? 1 : 0,
+          ['formData.marriageIndex']: res.data['marriage'] == 'N' ? 0 : 1,
+        })
+        if (res.data['age'] <= 0) {
+          wx.showModal({
+            title: '提示',
+            content: '进行辅助诊断需要完善个人信息，是否现在去完善？',
+            confirmText: '现在就去',
+            cancelText: '暂不完善',
+            success(res) {
+              if (res.confirm) {
+                console.log('用户点击确定');
+                wx.redirectTo({
+                  url: '/pages/my/info'
+                })
+              } else if (res.cancel) {
+                console.log('用户点击取消');
+                wx.navigateBack({
+                  delta: 1
+                })
+              }
+            }
+          })
         }
-      })
-    }
-    //提取表单数据
-    this.setData({
-      ['formData.name']: appInst.globalData.userTable['name'],
-      ['formData.sex']: appInst.globalData.userTable['sex'],
-      ['formData.age']: appInst.globalData.userTable['age'],
-      ['formData.careId']: appInst.globalData.userTable['careId'],
-      ['formData.id']: appInst.globalData.userTable['id'],
-      ['formData.tel']: appInst.globalData.userTable['tel'],
-      ['formData.emergencyName']: appInst.globalData.userTable['emergencyName'],
-      ['formData.emergencyTel']: appInst.globalData.userTable['emergencyTel'],
-      ['formData.region']: appInst.globalData.userTable['region'],
-      ['formData.address']: appInst.globalData.userTable['address'],
-      ['formData.nationIndex']: appInst.globalData.userTable['nationIndex'],
-      ['formData.date']: appInst.globalData.userTable['birthday'],
-      ['formData.familyDiseaseIndex']: appInst.globalData.userTable['familyDiseaseIndex'],
-      ['formData.marriageIndex']: appInst.globalData.userTable['marriageIndex'],
+      }
     })
+    
+    
   },
   form1InputChange: function (e) {
     const {

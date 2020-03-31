@@ -9,11 +9,11 @@
 </view>
 <mp-cells>
     <mp-cell link url="/pages/my/info" hover value="个人信息">
-        <image slot="title" src="{{iconUrl['info']}}" style="margin-right: 16px;vertical-align: middle;width:20px; height: 20px;"></image>
+        <image slot="title" src="{{iconUrl['info']}}" style="margin-right: 16px;vertical-align: middle;width:24px; height: 24px;"></image>
     </mp-cell>
 </mp-cells>
 <mp-cells>
     <mp-cell link url="/pages/my/setting" hover value="设置">
-        <image slot="title" src="{{iconUrl['setting']}}" style="margin-right: 16px;vertical-align: middle;width:20px; height: 20px;"></image>
+        <image slot="title" src="{{iconUrl['setting']}}" style="margin-right: 16px;vertical-align: middle;width:24px; height: 24px;"></image>
     </mp-cell>
 </mp-cells>

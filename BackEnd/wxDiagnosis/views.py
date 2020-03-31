@@ -10,11 +10,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from wxDiagnosis.models import User
+from django.db.models import Q  # 查询时使用 or 筛选
+from wxDiagnosis.models import PatientBasicinfo
 from wxDiagnosis.serializers import UserSerializer
-
-
-def index(request):
-    return HttpResponse(u"你好")
+from wxDiagnosis.serializers import PatientInfoSerializer
 
 
 # def create(request):
@@ -45,17 +44,21 @@ def index(request):
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# [登录]
+
 
 @api_view(['POST'])
-def login(request, format=None):
+def login(request):
     usr = request.data.get('username')
     pwd = request.data.get('password')
     openid = request.data.get('openid')
     obj = None
     # 微信授权登录
     if openid:
-        User.objects.get_or_create(openid=openid)
-        obj = User.objects.get(openid=openid)
+        obj = User.objects.filter(openid=openid).first()
+        if obj:
+            return Response(data={'msg': 'exist', 'userid': obj.pk}, status=status.HTTP_200_OK)
+        return Response(data={'msg': 'new'}, status=status.HTTP_200_OK)
 
         # serializer=UserSerializer(data=request.data)
         # if serializer.is_valid():
@@ -63,14 +66,39 @@ def login(request, format=None):
         #     return Response(serializer.data,status=status.HTTP_200_OK)
     # 用户名登陆
     else:
-        obj = User.objects.filter(username=usr, password=pwd).first()
-    if obj:
-        return Response(data={'msg': 'success', 'userid': obj.pk}, status=status.HTTP_200_OK)
+        obj = User.objects.get(username=usr, password=pwd)
+        if obj:
+            return Response(data={'msg': 'success', 'userid': obj.pk, 'openid': obj.openid}, status=status.HTTP_200_OK)
     return Response(data={'msg': 'failed'})
 
 
 @api_view(['POST'])
-def sign_up(request, format=None):
+def bind(request):
+    usr = request.data.get('username')
+    pwd = request.data.get('password')
+    openid = request.data.get('openid')
+    userid = request.data.get('userid')
+    try:
+        # 系统用户登录绑定微信查重
+        exist_obj = User.objects.get(openid=openid)
+        if exist_obj:
+            return Response(data={'msg': 'exist'}, status=status.HTTP_302_FOUND)
+    except User.DoesNotExist:
+        if userid:
+            # 系统用户登录绑定微信
+            _obj = User.objects.get(pk=userid)
+        else:
+            # 微信登录绑定系统用户
+            _obj = User.objects.get(username=usr, password=pwd)
+        if _obj:
+            _obj.openid = openid
+            _obj.save()
+            return Response(data={'msg': 'success', 'userid': _obj.pk}, status=status.HTTP_200_OK)
+        return Response(data={'msg': 'failed'})
+
+
+@api_view(['POST'])
+def sign_up(request):
     usr = request.data.get('username')
     pwd = request.data.get('password')
     obj = User.objects.filter(username=usr).first()
@@ -81,7 +109,7 @@ def sign_up(request, format=None):
 
 
 @api_view(['POST'])
-def get_openid(request, format=None):
+def get_openid(request):
     code = request.POST.get('code')
     print(code)
     url = "https://api.weixin.qq.com/sns/jscode2session?appid=wx0c12e472ccbcc246&" \
@@ -92,3 +120,22 @@ def get_openid(request, format=None):
     result = json.loads(result)['openid']
     # print(data)
     return Response(data={'openid': result}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def patient_info_update(request):
+    patient_info = PatientInfoSerializer(data=request.data)
+    if patient_info.is_valid():
+        patient_info.save()
+        return Response(data={'msg': 'created'}, status=status.HTTP_201_CREATED)
+    return Response(data={'msg': 'failed'}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def patient_info_get(request, user_id):
+    try:
+        info = PatientBasicinfo.objects.get(userid=user_id)
+    except PatientBasicinfo.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    info_data = PatientInfoSerializer(info)
+    return Response(data=info_data.data, status=status.HTTP_200_OK)

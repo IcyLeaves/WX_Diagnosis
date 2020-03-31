@@ -55,7 +55,7 @@
                     请选择地区
                 </view>
                 <view wx:else class="weui-input">
-                {{formData.region[0]}}{{formData.region[1]}}{{formData.region[2]}}
+                {{formData.region[0]}},{{formData.region[1]}},{{formData.region[2]}}
                 </view>
             </picker>
         </mp-cell>

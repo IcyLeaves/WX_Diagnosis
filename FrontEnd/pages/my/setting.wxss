@@ -1,11 +1,29 @@
 
  /* warn警告按钮 Idle*/
- button {
+ .exit-button {
     margin-top: 20rpx;
     background-color: #E64340;
     color: white;
   }
-  
+.setting-bind{
+  width: 80%;
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+.setting-bindIcon {
+  margin-right: 20rpx;
+  width: 46rpx;
+  height: 46rpx;
+}
+
+/* .setting-bind::after {
+  border-radius: 98rpx;
+  border: 0; 
+} */
   /* warn警告按钮 Hover*/
   .logout-button-hover {
     color: rgba(255, 255, 255, 0.6);
