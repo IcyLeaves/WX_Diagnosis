@@ -1,0 +1,35 @@
+<view class="signup-poster">
+    <image class="signup-image" mode="scaleToFill" src="/icons/signup.png"></image>
+</view>
+<view class="signup-container">
+    <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+
+    <mp-form id="form" rules="{{formRules}}" models="{{formData}}">
+        <mp-cells>
+            <mp-cell prop="username" title="用户名" ext-class="">
+                <input bindinput="formInputChange" data-field="username" class="weui-input" placeholder="请输入用户名" />
+            </mp-cell>
+             <mp-cell prop="password" title="密码" ext-class="">
+                <input type="password" bindinput="formInputChange" data-field="password" class="weui-input" placeholder="请输入密码" />
+            </mp-cell>
+            <mp-cell prop="confirmPassword" title="确认密码" ext-class="">
+                <input type="password" bindinput="formInputChange" data-field="confirmPassword" class="weui-input" placeholder="请再次输入密码" />
+            </mp-cell>
+        </mp-cells>
+    </mp-form>
+    <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="submitForm">注册</button>
+    </view>
+    <!-- <view class="login-signup" bindtap="signUp" hover-class="login-signup-hover">没有账户？注册一个</view>
+    <view class="divLine">
+    </view>
+    <view>
+        <button type="normal" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">使用微信登录</button>
+    </view> -->
+    <!-- <view class="login-row">
+        <image class="login-image" mode="scaleToFill" src="/icons/planet-active.png"></image>
+    </view>
+    <view class="login-row">
+        <button type="primary">微信登录</button>
+    </view> -->
+</view>

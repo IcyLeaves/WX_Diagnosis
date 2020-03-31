@@ -8,7 +8,7 @@
     <!-- 切换0介绍的内容 -->
     <view class='subpage gray-form' wx:if="{{currentTab==0}}">
       <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
-      <mp-form id="form" models="{{formData}}">
+      <mp-form id="form" models="{{formData}}" rules="{{rule0}}">
         <mp-cells title="个人身份信息">
           <mp-cell prop="name" title="姓名" ext-class="">
             <view class="weui-input">{{formData.name}}</view>
@@ -78,7 +78,7 @@
               <view class="weui-input">{{diabeteType[formData1.diabeteTypeIndex]}}</view>
             </picker>
           </mp-cell>
-        </mp-cells>s
+        </mp-cells>
         <mp-cells title="症状描述">
           <mp-cell prop="discribe">
             <textarea bindchange="form1InputChange" data-field="discribe" value='{{formData1.discribe}}' placeholder="请描述病症" class="weui-textarea" style="height: 3.3em" />

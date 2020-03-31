@@ -1,0 +1,25 @@
+/* pages/signup.wxss */
+.signup-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.signup-poster {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300rpx;
+}
+
+.signup-image{
+    display: flex;
+    justify-content: center;
+    height: 150rpx;
+    width: 150rpx;
+}
+page {
+    height: 100%;
+    background-color: white;
+}

@@ -1,0 +1,69 @@
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+<mp-form id="form" rules="{{rules}}" models="{{formData}}">
+    <mp-cells title="个人身份信息">
+        <mp-cell prop="name" title="姓名" ext-class="">
+            <input bindinput="formInputChange" data-field="name" value="{{formData.name}}"class="weui-input" placeholder="请输入姓名" />
+        </mp-cell>
+        <mp-cell prop="careId" title="医疗卡号" ext-class="">
+            <input type="number"  bindinput="formInputChange" data-field="careId" value="{{formData.careId}}"class="weui-input" placeholder="请输入医疗卡号" />
+        </mp-cell>
+        <mp-cell prop="id" title="身份证号" ext-class="">
+            <input type="idcard" bindblur="idInputChange" data-field="id" value="{{formData.id}}" class="weui-input" placeholder="请输入身份证号" />
+        </mp-cell>
+        <mp-cell style="color:gray" wx:if="{{isIdCorrect}}" prop="date" title="出生日期" ext-class="">
+            <picker data-field="date" mode="date" value="{{formData.date}}" disabled="{{true}}">
+                <view class="weui-input">{{formData.date}}</view>
+            </picker>
+        </mp-cell>
+        <mp-cell style="color:gray" wx:if="{{isIdCorrect}}" value="{{formData.sex}}" prop="sex" title="性别" ext-class="">
+            <view class="weui-input">{{formData.sex}}</view>
+        </mp-cell>
+        <mp-cell style="color:gray" wx:if="{{isIdCorrect}}"value="{{formData.age}}" prop="age" title="年龄" ext-class="">
+            <view class="weui-input">{{formData.age}}</view>
+        </mp-cell>
+        <mp-cell prop="nation" title="民族" ext-class="">
+            <picker bindchange="formInputChange" data-field="nationIndex" value="{{formData.nationIndex}}" range="{{nations}}">
+                <view class="weui-input">{{nations[formData.nationIndex]}}</view>
+            </picker>
+        </mp-cell>
+    </mp-cells>
+    <mp-cells title="联系方式">
+        <mp-cell prop="tel" title="联系电话" ext-class="">
+            <input type="number"  bindinput="formInputChange" data-field="tel" value="{{formData.tel}}" class="weui-input" placeholder="请输入联系电话" />
+        </mp-cell>
+        <mp-cell prop="emergencyName" title="紧急联系人" ext-class="">
+            <input bindinput="formInputChange" data-field="emergencyName"value="{{formData.emergencyName}}" class="weui-input" placeholder="请输入紧急联系人姓名" />
+        </mp-cell>
+        <mp-cell prop="emergencyTel" title="紧急联系方式" ext-class="">
+            <input type="number" bindinput="formInputChange" data-field="emergencyTel" value="{{formData.emergencyTel}}" class="weui-input" placeholder="请输入紧急联系人电话" />
+        </mp-cell>
+    </mp-cells>
+    <mp-cells title="家庭状况">
+        <mp-cell prop="familyDisease" title="家族病史" ext-class="">
+            <picker bindchange="formInputChange" data-field="familyDiseaseIndex" value="{{formData.familyDiseaseIndex}}" range="{{familyDisease}}">
+                <view class="weui-input">{{familyDisease[formData.familyDiseaseIndex]}}</view>
+            </picker>
+        </mp-cell>
+        <mp-cell prop="marriage" title="是否已婚" ext-class="">
+            <picker bindchange="formInputChange" data-field="marriageIndex" value="{{formData.marriageIndex}}" range="{{marriage}}">
+                <view class="weui-input">{{marriage[formData.marriageIndex]}}</view>
+            </picker>
+        </mp-cell>
+        <mp-cell prop="region" title="地区" ext-class="">
+            <picker mode="region" bindchange="formInputChange" data-field="region" value="{{formData.region}}">
+                <view style="color:gray" wx:if="{{formData.region==''}}" class="weui-input">
+                    请选择地区
+                </view>
+                <view wx:else class="weui-input">
+                {{formData.region[0]}},{{formData.region[1]}},{{formData.region[2]}}
+                </view>
+            </picker>
+        </mp-cell>
+        <mp-cell prop="address" title="详细住址" ext-class="">
+            <textarea bindinput="formInputChange" data-field="address" value='{{formData.address}}' class="weui-textarea" placeholder="请输入详细住址" style="height: 3.3em" />
+        </mp-cell>
+    </mp-cells>
+</mp-form>
+<view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="submitForm">保存</button>
+</view>

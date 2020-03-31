@@ -1,0 +1,21 @@
+<view class="bind-poster">
+    <image class="bind-image" mode="scaleToFill" src="/icons/bind.png"></image>
+</view>
+<view class="bind-container">
+    <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+
+    <mp-form id="form" rules="{{formRules}}" models="{{formData}}">
+        <mp-cells>
+            <mp-cell prop="username" title="用户名" ext-class="">
+                <input bindinput="formInputChange" data-field="username" class="weui-input" placeholder="请输入用户名" />
+            </mp-cell>
+            <mp-cell prop="password" title="密码" ext-class="">
+                <input type="password" bindinput="formInputChange" data-field="password" class="weui-input" placeholder="请输入密码" />
+            </mp-cell>
+        </mp-cells>
+    </mp-form>
+    <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="submitForm">绑定</button>
+    </view>
+    <view class="bind-signup" bindtap="signUp" hover-class="bind-signup-hover">没有账户？注册一个</view>
+</view>
