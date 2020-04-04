@@ -1,3 +1,5 @@
+var appInst =  getApp();
+
 // pages/index/index.js
 Page({
 
@@ -12,11 +14,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+wx.request({
+  url: appInst.globalData.myHost+'login/',
+  method:'POST',
+  data:{
+    openid:appInst.globalData.myOpenId
+  },
+  header: {
+    'Content-Type': 'application/json'
+  },
+  success: function(res) {
+    console.log(res);
+    appInst.globalData.myUserId=res.data.userid;
+  }
+})
   },
   onDiagnosisBtnClick: function (btn) {
     wx.navigateTo({
-      url: '/pages/diagnosis/diagnosis',
+      url: '/pages/patient/diagnosis/diagnosis',
       success: (result) => {
         console.log("重定向成功")
       },
@@ -37,7 +52,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.hideHomeButton();
   },
 
   /**

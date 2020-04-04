@@ -2,13 +2,12 @@
   "pages": [
     "pages/grant/grant",
     "pages/enter/enter",
-    "pages/patient/index/index",
     "pages/login/login",
     "pages/index/index",
     "pages/my/my",
     "pages/my/setting",
     "pages/my/info",
-    "pages/diagnosis/diagnosis",
+    "pages/patient/diagnosis/diagnosis",
     "pages/signup/signup",
     "pages/login/bind"
   ],
@@ -49,6 +48,7 @@
         "selectedIconPath": "icons/my-active.png"
       }
     ]
+    
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

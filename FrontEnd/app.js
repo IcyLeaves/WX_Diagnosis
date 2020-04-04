@@ -26,6 +26,9 @@ App({
               } else {
                 console.log(res)
               }
+            },
+            complete: function(res) {
+              console.log(res);
             }
           })
         } else {
@@ -33,24 +36,13 @@ App({
         }
       }
     });
-    wx.getSetting({
-      success: (res) => {
-        console.log("app加载，授权信息如下:")
-        console.log(res)
-        if (res.authSetting['scope.userInfo'] == true) {
-          wx.hideLoading();
-          wx.reLaunch({
-            url: '/pages/enter/enter',
-          })
-        }
-      },
-    });
 
   },
   globalData: {
     myHost:"http://127.0.0.1:8000/",
     myOpenId:'',
     myUserId:-1,
+    occationIndex:-1,
     userInfo:null
   }
 })

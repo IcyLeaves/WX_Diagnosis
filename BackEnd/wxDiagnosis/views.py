@@ -49,63 +49,51 @@ from wxDiagnosis.serializers import PatientInfoSerializer
 
 @api_view(['POST'])
 def login(request):
-    usr = request.data.get('username')
-    pwd = request.data.get('password')
     openid = request.data.get('openid')
-    obj = None
-    # 微信授权登录
-    if openid:
-        obj = User.objects.filter(openid=openid).first()
-        if obj:
-            return Response(data={'msg': 'exist', 'userid': obj.pk}, status=status.HTTP_200_OK)
-        return Response(data={'msg': 'new'}, status=status.HTTP_200_OK)
+    # 新建时返回的是True, 已经存在时返回False
+    user, b = User.objects.get_or_create(openid=openid)
+    return Response(data={'userid': user.pk}, status=status.HTTP_200_OK)
 
-        # serializer=UserSerializer(data=request.data)
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return Response(serializer.data,status=status.HTTP_200_OK)
-    # 用户名登陆
-    else:
-        obj = User.objects.get(username=usr, password=pwd)
-        if obj:
-            return Response(data={'msg': 'success', 'userid': obj.pk, 'openid': obj.openid}, status=status.HTTP_200_OK)
-    return Response(data={'msg': 'failed'})
+    # serializer=UserSerializer(data=request.data)
+    # if serializer.is_valid():
+    #     serializer.save()
+    #     return Response(serializer.data,status=status.HTTP_200_OK)
 
 
-@api_view(['POST'])
-def bind(request):
-    usr = request.data.get('username')
-    pwd = request.data.get('password')
-    openid = request.data.get('openid')
-    userid = request.data.get('userid')
-    try:
-        # 系统用户登录绑定微信查重
-        exist_obj = User.objects.get(openid=openid)
-        if exist_obj:
-            return Response(data={'msg': 'exist'}, status=status.HTTP_302_FOUND)
-    except User.DoesNotExist:
-        if userid:
-            # 系统用户登录绑定微信
-            _obj = User.objects.get(pk=userid)
-        else:
-            # 微信登录绑定系统用户
-            _obj = User.objects.get(username=usr, password=pwd)
-        if _obj:
-            _obj.openid = openid
-            _obj.save()
-            return Response(data={'msg': 'success', 'userid': _obj.pk}, status=status.HTTP_200_OK)
-        return Response(data={'msg': 'failed'})
+# @api_view(['POST'])
+# def bind(request):
+#     usr = request.data.get('username')
+#     pwd = request.data.get('password')
+#     openid = request.data.get('openid')
+#     userid = request.data.get('userid')
+#     try:
+#         # 系统用户登录绑定微信查重
+#         exist_obj = User.objects.get(openid=openid)
+#         if exist_obj:
+#             return Response(data={'msg': 'exist'}, status=status.HTTP_302_FOUND)
+#     except User.DoesNotExist:
+#         if userid:
+#             # 系统用户登录绑定微信
+#             _obj = User.objects.get(pk=userid)
+#         else:
+#             # 微信登录绑定系统用户
+#             _obj = User.objects.get(username=usr, password=pwd)
+#         if _obj:
+#             _obj.openid = openid
+#             _obj.save()
+#             return Response(data={'msg': 'success', 'userid': _obj.pk}, status=status.HTTP_200_OK)
+#         return Response(data={'msg': 'failed'})
 
 
-@api_view(['POST'])
-def sign_up(request):
-    usr = request.data.get('username')
-    pwd = request.data.get('password')
-    obj = User.objects.filter(username=usr).first()
-    if obj:
-        return Response(data={'msg': 'rename'})
-    User.objects.create(username=usr, password=pwd)
-    return Response(data={'msg': 'signed'}, status=status.HTTP_200_OK)
+# @api_view(['POST'])
+# def sign_up(request):
+#     usr = request.data.get('username')
+#     pwd = request.data.get('password')
+#     obj = User.objects.filter(username=usr).first()
+#     if obj:
+#         return Response(data={'msg': 'rename'})
+#     User.objects.create(username=usr, password=pwd)
+#     return Response(data={'msg': 'signed'}, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -124,11 +112,12 @@ def get_openid(request):
 
 @api_view(['POST'])
 def patient_info_update(request):
-    patient_info = PatientInfoSerializer(data=request.data)
-    if patient_info.is_valid():
-        patient_info.save()
+    id = request.data.get('userid')
+    # new_info = PatientInfoSerializer(data=request.data)
+    obj, created = PatientBasicinfo.objects.update_or_create(userid=id,defaults=request.data.get('info'))
+    if created:
         return Response(data={'msg': 'created'}, status=status.HTTP_201_CREATED)
-    return Response(data={'msg': 'failed'}, status=status.HTTP_200_OK)
+    return Response(data={'msg': 'modified'}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

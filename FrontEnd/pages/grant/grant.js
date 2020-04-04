@@ -57,11 +57,11 @@ Page({
         console.log("app加载，授权信息如下:")
         console.log(res)
         if (res.authSetting['scope.userInfo'] == true) {
-          wx.hideLoading();
           wx.reLaunch({
             url: '/pages/enter/enter',
           })
         }
+        wx.hideLoading();
       },
     });
   },

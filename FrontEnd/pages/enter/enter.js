@@ -1,4 +1,6 @@
 // pages/enter/enter.js
+var appInst =  getApp();
+
 Page({
 
   /**
@@ -11,9 +13,12 @@ Page({
       administor: "/icons/administor.png"
     }
   },
-  toPatient:function(){
-    wx.redirectTo({
-      url: '/pages/patient/index/index'
+  toIndex:function(e){
+    console.log(e);
+    var choosedPlatformIndex=e.currentTarget.dataset.index;
+    appInst.globalData.occationIndex=choosedPlatformIndex;//平台编号，0患者，1医生，2管理员
+    wx.switchTab({
+      url: '/pages/index/index'
     })
   },
   /**

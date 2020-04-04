@@ -212,27 +212,32 @@ Page({
         }
       } else {
         var that = this;
+        console.log("表单数据如下:")
+        console.log(that.data.formData)
         wx.request({
           url: appInst.globalData.myHost + 'updatePatientInfo/',
           method: 'POST',
           data: {
             userid: appInst.globalData.myUserId,
-            name: that.data.formData['name'],
-            careid: that.data.formData['careId'],
-            idcard: that.data.formData['id'],
-            birthday: that.data.formData['date'],
-            gender: that.data.formData['sex'] == '男' ? 'M' : 'W',
-            age: that.data.formData['age'],
-            nation: staticData.nations[that.data.formData['nationIndex']],
-            tel: that.data.formData['tel'],
-            emername: that.data.formData['emergencyName'],
-            emertel: that.data.formData['emergencyTel'],
-            familydisease: that.data.formData['familydisease'] == '有' ? 'Y' : 'N',
-            marriage: that.data.formData['marriage'] == '未婚' ? 'N' : 'Y',
-            region: that.data.formData['region'][0] + ' ' +
-              that.data.formData['region'][1] + ' ' +
-              that.data.formData['region'][2],
-            address: that.data.formData['address'],
+            info:{
+              name: that.data.formData['name'],
+              careid: that.data.formData['careId'],
+              idcard: that.data.formData['id'],
+              birthday: that.data.formData['date'],
+              gender: that.data.formData['sex'] == '男' ? 'M' : 'W',
+              age: that.data.formData['age'],
+              nation: staticData.nations[that.data.formData['nationIndex']],
+              tel: that.data.formData['tel'],
+              emername: that.data.formData['emergencyName'],
+              emertel: that.data.formData['emergencyTel'],
+              familydisease: Number(that.data.formData['familyDiseaseIndex']) == 0 ? 'N' : 'Y',
+              marriage: Number(that.data.formData['marriageIndex']) == 0 ? 'N' : 'Y',
+              region: that.data.formData['region'][0] + ' ' +
+                that.data.formData['region'][1] + ' ' +
+                that.data.formData['region'][2],
+              address: that.data.formData['address'],
+            }
+            
           },
           header: {
             'Content-Type': 'application/json'
@@ -241,8 +246,6 @@ Page({
             console.log(res)
           }
         })
-        console.log('全局数据如下');
-        console.log(appInst.globalData);
         wx.showToast({
           title: '保存成功'
         })

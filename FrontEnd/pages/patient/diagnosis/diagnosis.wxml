@@ -5,9 +5,9 @@
         {{item}}
       </view>
     </view>
-    <!-- 切换0介绍的内容 -->
+    <!-- 切换内容 0 -->
     <view class='subpage gray-form' wx:if="{{currentTab==0}}">
-      <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+      <mp-toptips msg="{{error}}" type="error" show="{{error}}" />
       <mp-form id="form" models="{{formData}}" rules="{{rule0}}">
         <mp-cells title="个人身份信息">
           <mp-cell prop="name" title="姓名" ext-class="">
@@ -64,6 +64,7 @@
         <button class="weui-btn" type="primary" bindtap="submitForm">下一步</button>
       </view>
     </view>
+    <!-- 切换内容 1 -->
     <view class='subpage' wx:if="{{currentTab==1}}">
       <mp-toptips msg="{{error2}}" type="error" show="{{error2}}"></mp-toptips>
       <mp-form id="form1" rules="{{rules1}}" models="{{formData1}}">
@@ -81,12 +82,67 @@
         </mp-cells>
         <mp-cells title="症状描述">
           <mp-cell prop="discribe">
-            <textarea bindchange="form1InputChange" data-field="discribe" value='{{formData1.discribe}}' placeholder="请描述病症" class="weui-textarea" style="height: 3.3em" />
+            <textarea bindchange="form1InputChange" data-field="discribe" value='{{formData1.discribe}}' placeholder="请描述病症" class="weui-textarea" />
           </mp-cell>
         </mp-cells>
       </mp-form>
       <view class="weui-btn-area">
         <button class="weui-btn" type="primary" bindtap="submitForm1">下一步</button>
+      </view>
+    </view>
+    <!-- 切换内容 2 -->
+    <view class="subpage" wx:if="{{currentTab==2}}">
+      <mp-toptips msg="{{error}}" type="error" show="{{error}}" />
+      <view class="center-container">
+        <block wx:for="{{panelArray}}" wx:key="id" wx:for-index="panelIdx" wx:for-item="panel">
+          <view class="num-panel" animation="{{panel.panelAnimate}}">
+            <view class="num-list-title">
+              <image src="{{iconUrl['blood']}}" mode="scaleToFill" />
+              <view>{{panel.name}}</view>
+              <view class="num-list-title-end" data-panelindex="{{panelIdx}}" bindtap="changeVisible">
+                <image src="{{iconUrl['arrow']}}" animation="{{panel.arrowAnimate}}"mode="scaleToFill"  />
+              </view>
+            </view>
+            <view class="num-list-content" wx:if="{{panel.isshow}}">
+              <view class="num-table-head">
+                <view class="num-table-head-left">
+                  <image src="{{iconUrl['calendar']}}"></image>
+                  <view>检测日期</view>
+                </view>
+                <view class="num-table-head-right">
+                  <image src="{{iconUrl['num']}}"></image>
+                  <view>指标</view>
+                </view>
+              </view>
+              <block wx:for="{{bloodArray[panelIdx]}}" wx:key="id" wx:for-index="idx" wx:for-item="bloodData">
+                <view class="num-table-item" animation="{{bloodData.animate}}">
+                  <view class="num-table-item-left">
+                    <picker class="num-table-item-input" bindchange="form2InputChange" data-panelindex="{{panelIdx}}" data-field="year" data-id="{{idx}}" range="{{yearRange}}" value="{{bloodData.year<=birthYear?0:(bloodData.year-birthYear)}}">
+                      {{bloodData.year<=birthYear?'　':bloodData.year}}
+                    </picker>
+                    <view>年</view>
+                    <picker class="num-table-item-input" bindchange="form2InputChange" data-panelindex="{{panelIdx}}" data-field="month" data-id="{{idx}}" range="{{monthRange}}" value="{{bloodData.month<=0?0:bloodData.month}}">
+                      {{bloodData.month<=0?'　':bloodData.month}}
+                    </picker>
+                    <view>月</view>
+                  </view>
+                  <view class="num-table-item-right">
+                    <input class="num-table-item-input {{bloodData.errorClass}}" bindinput="form2InputChange" data-panelindex="{{panelIdx}}" data-field="num" data-id="{{idx}}" type="digit" value="{{bloodData.num<=0?'':bloodData.num}}"></input>
+                    <view class="num-table-image-button" hover-class="num-table-image-button-press" data-panelindex="{{panelIdx}}" data-id="{{idx}}" bindtap="removeData">
+                      <image src="{{iconUrl['remove']}}" />
+                    </view>
+                  </view>
+                </view>
+              </block>
+              <view class="num-table-footer" hover-class="num-table-footer-press" data-panelindex="{{panelIdx}}" bindtap="createNewData">
+                +　新建指标
+              </view>
+            </view>
+          </view>
+        </block>
+        <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="submitForm2">下一步</button>
+      </view>
       </view>
     </view>
   </scroll-view>

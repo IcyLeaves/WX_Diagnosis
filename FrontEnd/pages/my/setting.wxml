@@ -17,13 +17,5 @@
     </mp-cells>
   </view>
 </mp-halfScreenDialog>
-<button wx:if="{{isBinded!=null}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="setting-bind">
-    <image class='setting-bindIcon' src="{{iconUrl['bind']}}"></image>
-    <view>绑定微信账号</view>
-  </button>
-<mp-cells wx:else>
-  <mp-cell   value="微信账号已绑定">
-    <image slot="title" src="{{iconUrl['bind']}}" style="margin-right: 16px;vertical-align: middle;width:24px; height: 24px;"></image>
-  </mp-cell>
-</mp-cells>
+
 <button class="exit-button" bindtap="confirmLogOut" hover-class="logout-button-hover">退出登录</button>
